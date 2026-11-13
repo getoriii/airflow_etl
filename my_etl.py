@@ -10,16 +10,18 @@ def create_table_task():
     data = select_values()
     print(f"Данные в базе: {data}")
     print("--- КОНЕЦ РАБОТЫ ---")
+try:
+    with DAG(
+        dag_id="basic_etl_dag",
+        start_date=datetime(2026, 1, 1),
+        schedule="@hourly",
+        end_date=datetime(2026, 2, 1),
+        catchup=False
+    ) as dag:
 
-with DAG(
-    dag_id="basic_etl_dag",
-    start_date=datetime(2026, 1, 1),
-    schedule="@hourly",
-    end_date=datetime(2026, 2, 1),
-    catchup=False
-) as dag:
-
-    task = PythonOperator(
-        task_id="create_table",
-        python_callable=create_table_task
-    )
+        task = PythonOperator(
+            task_id="create_table",
+            python_callable=create_table_task
+        )
+except Exception as e:
+    print(f"Ошибка при создании DAG: {e}") #внесение изменения в код для отладки ошибок при создании DAG
