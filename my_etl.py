@@ -17,7 +17,7 @@ def create_table_task():
     print("--- КОНЕЦ РАБОТЫ ---")
     return 1
 
-def selet_values_task(**context):
+def select_values_task(**context):
     data=select_values()
     inserted_values = context['task_instance'].xcom_pull(task_ids='create_table')
     print(f"Вставленные значения: {inserted_values}")
